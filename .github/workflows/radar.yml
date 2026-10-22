@@ -60,7 +60,7 @@ jobs:
       # Only keep a downloadable copy when the repo is private: in a public repo,
       # artifacts are visible to anyone.
       - name: Keep digest copy (private repos only)
-        if: github.event.repository.private
+        if: always() && github.event.repository.private
         uses: actions/upload-artifact@v4
         with:
           name: digest-${{ github.run_id }}

@@ -6,6 +6,7 @@ import json
 import logging
 import os
 import sys
+from collections import Counter
 from datetime import date
 from pathlib import Path
 
@@ -50,18 +51,26 @@ def gather_live(cfg: dict, state: State) -> tuple[list[Job], list[Post], list[st
                                       pause=tuple(pj.get("pause_seconds", [25, 70])))
         jobs += got
         notes += n
-    if li.get("alert_emails", {}).get("enabled") and os.getenv("IMAP_PASSWORD"):
+    if li.get("alert_emails", {}).get("enabled") and env("IMAP_PASSWORD"):
         ae = li["alert_emails"]
         try:
-            jobs += linkedin.alert_emails(os.getenv("IMAP_HOST", "imap.gmail.com"),
-                                          os.environ["IMAP_USER"], os.environ["IMAP_PASSWORD"],
-                                          days=int(ae.get("days", 2)))
+            jobs += linkedin.alert_emails(env("IMAP_HOST", "imap.gmail.com"),
+                                          env("IMAP_USER") or env("SMTP_USER"),
+                                          env("IMAP_PASSWORD"), days=int(ae.get("days", 2)))
         except Exception as e:
             notes.append(f"linkedin alerts: {e}")
 
     posts, errs = engage.fetch_all(cfg.get("engage", {}))
     notes += errs
+    by_src = Counter(j.source for j in jobs)
+    notes.append("listings by source: " + (", ".join(f"{k} {v}" for k, v in sorted(by_src.items()))
+                                           or "none"))
     return jobs, posts, notes
+
+
+def env(name: str, default: str = "") -> str:
+    """GitHub Actions passes unset secrets as empty strings, so treat '' as missing."""
+    return os.getenv(name) or default
 
 
 def gather_fixtures(d: Path) -> tuple[list[Job], list[Post], list[str]]:
@@ -136,16 +145,29 @@ def main(argv=None) -> int:
                        key=lambda p: p.score, reverse=True)[: int(sc.get("max_posts", 6))]
     links = engage.linkedin_search_links(cfg["engage"].get("linkedin_topics", []))
 
+    notes.append(f"funnel: {stats['jobs_scanned']} scanned → {len(jobs)} new → "
+                 f"{len(shortlist)} passed title/location filters → {len(top_jobs)} scored ≥ {int(min_score)}")
+    near = [j for j in shortlist if j not in top_jobs][:5]
+    if near:
+        notes.append("near misses: " + "; ".join(f"{int(j.score)} {j.title} @ {j.company}" for j in near))
+
     html = digest.render(top_jobs, top_posts, links, weekly, notes, stats)
     Path(a.out).write_text(html)
     log.info("digest written: %s (%d jobs, %d posts)", a.out, len(top_jobs), len(top_posts))
+    for n in notes:
+        log.info("note: %s", n)
 
-    if not a.no_email and os.getenv("SMTP_PASSWORD"):
-        notify.send(html, f"Signal Radar · {len(top_jobs)} roles · {date.today():%d %b}",
-                    os.getenv("SMTP_HOST", "smtp.gmail.com"), int(os.getenv("SMTP_PORT", "465")),
-                    os.environ["SMTP_USER"], os.environ["SMTP_PASSWORD"],
-                    os.getenv("DIGEST_TO", os.environ["SMTP_USER"]))
-        log.info("digest emailed")
+    if not a.no_email and env("SMTP_PASSWORD"):
+        user = env("SMTP_USER")
+        try:
+            notify.send(html, f"Signal Radar · {len(top_jobs)} roles · {date.today():%d %b}",
+                        env("SMTP_HOST", "smtp.gmail.com"), int(env("SMTP_PORT", "465")),
+                        user, env("SMTP_PASSWORD"), env("DIGEST_TO", user))
+            log.info("digest emailed")
+        except Exception as e:
+            # Don't mark anything as seen: you haven't seen it yet
+            log.error("email failed: %s: %s", type(e).__name__, e)
+            return 1
 
     if not a.fixtures:
         state.mark(top_jobs, "seen_jobs")

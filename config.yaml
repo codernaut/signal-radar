@@ -68,7 +68,6 @@ ats:
   companies:
     - {name: Cognite, ats: lever, site: cognite}
     - {name: ThinkOnward, ats: greenhouse, board: thinkonward}
-    - {name: AI71, ats: greenhouse, board: ai71jobs, region: eu}
     - {name: Baker Hughes, ats: workday, url: "https://bakerhughes.wd5.myworkdayjobs.com/BakerHughes"}
   workday_searches: [engineering manager, director software, head of engineering, architect data]
 
