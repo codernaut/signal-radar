@@ -1,0 +1,13 @@
+[
+ {
+  "title": "Seismic DDMS: SEG-Y ingestion performance for large surveys",
+  "web_url": "https://community.opengroup.org/osdu/platform/x/-/issues/5",
+  "description": "Ingestion of 2TB SEG-Y is slow",
+  "author": {
+   "username": "d"
+  },
+  "updated_at": "2026-10-18T00:00:00Z",
+  "user_notes_count": 6,
+  "upvotes": 2
+ }
+]

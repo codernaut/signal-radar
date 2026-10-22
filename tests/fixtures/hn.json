@@ -1,0 +1,22 @@
+{
+ "hits": [
+  {
+   "objectID": "111",
+   "title": "Ask HN: Is data virtualization dead in the age of lakehouses?",
+   "url": "",
+   "author": "a",
+   "points": 80,
+   "num_comments": 40,
+   "created_at": "2026-10-20T00:00:00Z"
+  },
+  {
+   "objectID": "112",
+   "title": "Show HN: My cat photo app",
+   "url": "https://x",
+   "author": "b",
+   "points": 200,
+   "num_comments": 10,
+   "created_at": "2026-10-20T00:00:00Z"
+  }
+ ]
+}

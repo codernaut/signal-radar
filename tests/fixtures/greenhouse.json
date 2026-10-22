@@ -1,0 +1,29 @@
+{
+ "jobs": [
+  {
+   "title": "Director of Engineering, Subsurface Data Platform",
+   "absolute_url": "https://job-boards.greenhouse.io/x/jobs/1",
+   "location": {
+    "name": "Abu Dhabi, United Arab Emirates"
+   },
+   "updated_at": "2026-10-20T08:00:00Z",
+   "content": "&lt;p&gt;Lead OSDU-based subsurface data platform. Seismic, well log, Kubernetes, Java.&lt;/p&gt;"
+  },
+  {
+   "title": "Senior Recruiter",
+   "absolute_url": "https://job-boards.greenhouse.io/x/jobs/2",
+   "location": {
+    "name": "Dubai"
+   },
+   "content": ""
+  },
+  {
+   "title": "Engineering Manager, Growth",
+   "absolute_url": "https://job-boards.greenhouse.io/x/jobs/3",
+   "location": {
+    "name": "Remote - US only"
+   },
+   "content": "consumer growth"
+  }
+ ]
+}

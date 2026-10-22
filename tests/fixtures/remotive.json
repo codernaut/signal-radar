@@ -1,0 +1,19 @@
+{
+ "jobs": [
+  {
+   "title": "Head of Engineering (AI Platform)",
+   "company_name": "Acme AI",
+   "candidate_required_location": "Worldwide",
+   "url": "https://remotive.com/j/1",
+   "description": "<p>LLM agentic platform, Keycloak, Kubernetes</p>",
+   "publication_date": "2026-10-20"
+  },
+  {
+   "title": "VP Engineering",
+   "company_name": "Shopco",
+   "candidate_required_location": "USA Only",
+   "url": "https://remotive.com/j/2",
+   "description": "ecommerce"
+  }
+ ]
+}

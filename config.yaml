@@ -1,0 +1,126 @@
+# Signal Radar configuration. Personal details (profile, email, keys) live in
+# GitHub Secrets, not here, so this file is safe to commit.
+
+# The positioning Claude scores against. See README "Positioning" for the reasoning.
+strategy: |
+  Primary target: engineering leadership for energy data & AI platforms. Director / Head of
+  Engineering / Senior Engineering Manager at operators' digital arms and energy software
+  vendors in the Gulf and Asia (ADNOC & AIQ, Aramco & Aramco Digital, QatarEnergy, PDO, KOC,
+  Petronas Digital, SLB, Halliburton, Baker Hughes, Cognite, AspenTech, Kongsberg Digital,
+  TotalEnergies/Shell digital hubs). This is where the candidate's rare combination
+  (upstream subsurface data + OSDU + enterprise data platforms + people leadership + MBA)
+  is hardest to find and fastest to hire.
+  Secondary: Principal / Enterprise Architect for data platforms at the same companies.
+  Tertiary: AI platform leadership at Gulf AI companies (G42, Core42, AI71, Presight) where
+  enterprise integration, IAM and governed data access matter more than model research.
+  Penalize: generic consumer-tech EM roles with no domain edge, roles requiring US/EU work
+  authorization, pure people-management roles with no platform ownership, sales/presales.
+
+weekly_post_day: 0   # Monday (0=Mon ... 6=Sun)
+themes:
+  - What OSDU adoption actually looks like inside an operator, beyond the slides
+  - Migrating decades of subsurface data (OpenWorks, Petrel, SEG-Y) to cloud without breaking geoscientists' workflows
+  - Securing agentic AI with enterprise IAM: why Keycloak-style authorization matters more than the model
+  - Data virtualization vs. ETL: when federation wins and when it quietly fails
+  - Building high-performing engineering teams in Pakistan for global energy clients
+
+scoring:
+  model: claude-sonnet-5-5
+  llm_shortlist: 30      # jobs sent to Claude after keyword filtering
+  post_shortlist: 20
+  min_job_score: 55      # Claude's 0-100 score; below this never reaches the digest
+  min_keyword_score: 40  # bar used only when no API key is set
+  max_jobs: 10
+  max_posts: 6
+
+filters:
+  title_include: [director, head, vp, vice president, principal, engineering manager,
+                  software development manager, senior manager, group manager, chief architect,
+                  enterprise architect, lead architect, platform lead, technical director,
+                  cto, chief technology officer]
+  title_exclude: [intern, junior, graduate, trainee, sales, account, recruiter, recruitment,
+                  marketing, mechanical, electrical, civil, drilling, hse, facilities, construction,
+                  procurement, finance, legal, field, nurse, teacher, supply chain]
+  locations_allowed: [united arab emirates, uae, dubai, abu dhabi, sharjah, saudi arabia, ksa,
+                      riyadh, jeddah, dhahran, khobar, al khobar, dammam, qatar, doha, oman, muscat,
+                      bahrain, manama, kuwait, singapore, malaysia, kuala lumpur, indonesia, jakarta,
+                      thailand, bangkok, pakistan, islamabad, rawalpindi, lahore, karachi]
+  locations_preferred: [united arab emirates, uae, dubai, abu dhabi, saudi arabia, riyadh, dhahran,
+                        khobar, qatar, doha, oman, bahrain, kuwait, singapore, kuala lumpur]
+  remote_excluded_regions: [us only, usa only, united states, us-based, north america, canada,
+                            uk only, europe only, eu only, americas, latam]
+  domain_terms: [osdu, subsurface, upstream, seismic, seg-y, segy, petrel, openworks, well log,
+                 wellbore, oil, gas, energy, e&p, exploration, reservoir, geoscience, geospatial,
+                 petroleum, digital oilfield, energy transition, ccus, carbon capture]
+  stack_terms: [java, quarkus, keycloak, teiid, data virtualization, data federation, kubernetes,
+                microservices, iam, oauth, oidc, data platform, data mesh, llm, genai, generative ai,
+                agentic, ai platform, mlops, cloud migration, azure, aws, data integration,
+                middleware, api gateway]
+
+# ---------- job sources ----------
+ats:
+  # Company career sites. To add one, open its careers page and read the URL:
+  #   job-boards.greenhouse.io/<board>   -> ats: greenhouse, board: <board>
+  #   jobs.lever.co/<site>               -> ats: lever, site: <site>
+  #   jobs.ashbyhq.com/<board>           -> ats: ashby, board: <board>
+  #   <x>.wd5.myworkdayjobs.com/<Site>   -> ats: workday, url: <full careers url>
+  # A wrong entry only produces a line in the digest's run notes.
+  companies:
+    - {name: Cognite, ats: lever, site: cognite}
+    - {name: ThinkOnward, ats: greenhouse, board: thinkonward}
+    - {name: AI71, ats: greenhouse, board: ai71jobs, region: eu}
+    - {name: Baker Hughes, ats: workday, url: "https://bakerhughes.wd5.myworkdayjobs.com/BakerHughes"}
+  workday_searches: [engineering manager, director software, head of engineering, architect data]
+
+boards:
+  remotive_searches: [engineering manager, director of engineering, head of engineering]
+  remoteok: true
+
+linkedin:
+  public_jobs:
+    # Logged-out public job search: your account is never used. Hard daily cap below,
+    # persisted across runs (manual re-runs can't exceed it), long random pauses,
+    # last-24h listings only, stops immediately if LinkedIn throttles.
+    enabled: true
+    max_requests_per_day: 3
+    pause_seconds: [25, 70]
+    # With 3 requests/day the pool rotates, so every query runs every ~4-5 days.
+    queries:
+      - {keywords: "director engineering OR head of engineering", location: "United Arab Emirates"}
+      - {keywords: "engineering manager data platform", location: "United Arab Emirates"}
+      - {keywords: "director engineering OR head of engineering", location: "Saudi Arabia"}
+      - {keywords: "senior engineering manager software", location: "Saudi Arabia"}
+      - {keywords: "OSDU"}
+      - {keywords: "engineering manager OR director engineering", location: "Qatar"}
+      - {keywords: "principal architect data platform", location: "United Arab Emirates"}
+      - {keywords: "director of engineering", location: "Singapore"}
+      - {keywords: "engineering manager OR head of engineering", location: "Malaysia"}
+      - {keywords: "director engineering OR head of engineering", location: "Pakistan"}
+      - {keywords: "engineering manager OR director engineering", location: "Pakistan", remote: true}
+      - {keywords: "AI platform lead OR head of AI engineering", location: "United Arab Emirates"}
+      - {keywords: "subsurface software engineering manager"}
+      - {keywords: "engineering manager energy", location: "Oman"}
+  alert_emails:
+    # Best LinkedIn source: zero LinkedIn traffic. Create 3-5 job alerts in the LinkedIn app
+    # (daily, your target titles + locations) and set IMAP_USER / IMAP_PASSWORD secrets.
+    enabled: true
+    days: 2
+
+# ---------- engagement sources ----------
+engage:
+  topic_terms: [osdu, subsurface, seismic, oil, gas, energy, geoscience, data virtualization,
+                federation, quarkus, keycloak, iam, kubernetes, data platform, llm, agentic,
+                mcp, rag, engineering manager, engineering leadership, architecture, java]
+  hn_queries: [OSDU, data virtualization, Quarkus, Keycloak, engineering management,
+               seismic data, energy data, agentic AI enterprise, MCP security]
+  subreddits: [ExperiencedDevs, EngineeringManagers, dataengineering, java, oilandgasworkers]
+  reddit_queries: [data platform, engineering manager, OSDU, Keycloak, Quarkus, AI agents]
+  github_queries:
+    - 'repo:quarkiverse/quarkus-langchain4j is:issue is:open'
+    - 'repo:quarkusio/quarkus is:issue is:open label:"good first issue"'
+    - 'repo:keycloak/keycloak is:issue is:open label:"help wanted"'
+    - 'repo:modelcontextprotocol/java-sdk is:issue is:open'
+    - 'repo:equinor/segyio is:issue is:open'
+  osdu_searches: [seismic, wellbore, entitlements, AI]
+  linkedin_topics: [OSDU, subsurface data, energy data platform, data virtualization,
+                    agentic AI enterprise, engineering leadership, oil and gas digital transformation]

@@ -1,0 +1,15 @@
+{
+ "items": [
+  {
+   "title": "Support Keycloak token exchange for tool calls",
+   "html_url": "https://github.com/quarkiverse/quarkus-langchain4j/issues/9",
+   "repository_url": "https://api.github.com/repos/quarkiverse/quarkus-langchain4j",
+   "body": "MCP tool calls need delegated auth",
+   "user": {
+    "login": "c"
+   },
+   "updated_at": "2026-10-19T00:00:00Z",
+   "comments": 3
+  }
+ ]
+}
