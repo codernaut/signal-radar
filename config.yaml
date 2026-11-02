@@ -66,39 +66,42 @@ ats:
   #   <x>.wd5.myworkdayjobs.com/<Site>   -> ats: workday, url: <full careers url>
   # A wrong entry only produces a line in the digest's run notes.
   companies:
-    - {name: Cognite, ats: lever, site: cognite}
+    - {name: Cognite, ats: greenhouse, board: cognite}
     - {name: ThinkOnward, ats: greenhouse, board: thinkonward}
     - {name: Baker Hughes, ats: workday, url: "https://bakerhughes.wd5.myworkdayjobs.com/BakerHughes"}
   workday_searches: [engineering manager, director software, head of engineering, architect data]
 
 boards:
   remotive_searches: [engineering manager, director of engineering, head of engineering]
-  remoteok: true
+  remoteok: false   # 99 listings/day, almost all US-only or off-target
 
 linkedin:
   public_jobs:
     # Logged-out public job search: your account is never used. Hard daily cap below,
     # persisted across runs (manual re-runs can't exceed it), long random pauses,
-    # last-24h listings only, stops immediately if LinkedIn throttles.
+    # past-week listings (seen ones hidden), stops immediately if LinkedIn throttles.
     enabled: true
     max_requests_per_day: 3
     pause_seconds: [25, 70]
     # With 3 requests/day the pool rotates, so every query runs every ~4-5 days.
     queries:
-      - {keywords: "director engineering OR head of engineering", location: "United Arab Emirates"}
+      # Gulf "engineering manager" alone returns construction/MEP roles, so every query
+      # carries a software / data / platform word.
+      - {keywords: "head of software engineering OR director software engineering", location: "United Arab Emirates"}
       - {keywords: "engineering manager data platform", location: "United Arab Emirates"}
-      - {keywords: "director engineering OR head of engineering", location: "Saudi Arabia"}
-      - {keywords: "senior engineering manager software", location: "Saudi Arabia"}
+      - {keywords: "head of software engineering OR director software engineering", location: "Saudi Arabia"}
       - {keywords: "OSDU"}
-      - {keywords: "engineering manager OR director engineering", location: "Qatar"}
-      - {keywords: "principal architect data platform", location: "United Arab Emirates"}
-      - {keywords: "director of engineering", location: "Singapore"}
-      - {keywords: "engineering manager OR head of engineering", location: "Malaysia"}
-      - {keywords: "director engineering OR head of engineering", location: "Pakistan"}
-      - {keywords: "engineering manager OR director engineering", location: "Pakistan", remote: true}
-      - {keywords: "AI platform lead OR head of AI engineering", location: "United Arab Emirates"}
-      - {keywords: "subsurface software engineering manager"}
-      - {keywords: "engineering manager energy", location: "Oman"}
+      - {keywords: "software engineering manager", location: "Saudi Arabia"}
+      - {keywords: "director data platform OR head of data engineering", location: "United Arab Emirates"}
+      - {keywords: "head of software engineering OR software engineering manager", location: "Qatar"}
+      - {keywords: "principal architect OR enterprise architect data", location: "Saudi Arabia"}
+      - {keywords: "subsurface software OR geoscience software manager"}
+      - {keywords: "director of engineering software", location: "Singapore"}
+      - {keywords: "software engineering manager OR head of engineering", location: "Malaysia"}
+      - {keywords: "head of AI engineering OR AI platform lead", location: "United Arab Emirates"}
+      - {keywords: "director engineering OR head of engineering software", location: "Pakistan"}
+      - {keywords: "engineering manager software", location: "Pakistan", remote: true}
+      - {keywords: "software engineering manager OR head of digital", location: "Oman"}
   alert_emails:
     # Best LinkedIn source: zero LinkedIn traffic. Create 3-5 job alerts in the LinkedIn app
     # (daily, your target titles + locations) and set IMAP_USER / IMAP_PASSWORD secrets.
@@ -112,8 +115,9 @@ engage:
                 mcp, rag, engineering manager, engineering leadership, architecture, java]
   hn_queries: [OSDU, data virtualization, Quarkus, Keycloak, engineering management,
                seismic data, energy data, agentic AI enterprise, MCP security]
-  subreddits: [ExperiencedDevs, EngineeringManagers, dataengineering, java, oilandgasworkers]
-  reddit_queries: [data platform, engineering manager, OSDU, Keycloak, Quarkus, AI agents]
+  # Reddit blocks GitHub's servers (HTTP 403), so it's off. Leave lists empty to disable.
+  subreddits: []
+  reddit_queries: []
   github_queries:
     - 'repo:quarkiverse/quarkus-langchain4j is:issue is:open'
     - 'repo:quarkusio/quarkus is:issue is:open label:"good first issue"'

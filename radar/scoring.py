@@ -139,6 +139,11 @@ background, (2) seniority match, (3) location/relocation feasibility for someone
 FAMILY from Pakistan (Gulf and Asia employers that sponsor family visas are a plus; remote roles \
 restricted to US/EU work authorization are a hard negative), (4) leverage of the candidate's rare \
 assets: upstream E&P data, OSDU, data virtualization, enterprise IAM, engineering leadership + MBA.
+Many listings (LinkedIn especially) have NO description. Then judge on title, company and \
+location, using what you know about the company; do not penalize the missing description itself. \
+A software/data/platform leadership title at an energy, energy-software or Gulf tech/AI company in \
+an allowed location deserves 65+ even without details. "Engineering Manager" at a construction, \
+MEP or facilities firm is not a software role: score it below 20.
 Return ONLY a JSON array, one object per listing:
 {"id": str, "score": int, "track": "leadership"|"technical", "why": str (<=30 words), \
 "apply_angle": str (<=30 words: the single proof point to lead with), "flags": [str] (risks, <=3)}"""

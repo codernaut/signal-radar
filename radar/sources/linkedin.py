@@ -79,7 +79,9 @@ def public_jobs(queries: list[dict], budget: DailyBudget, http=None,
         if i:
             polite_pause(*pause)
         params = {"keywords": q["keywords"], "location": q.get("location", ""),
-                  "f_TPR": "r86400",         # posted in the last 24h: only fresh roles
+                  # Past week: with only ~3 requests/day, a 24h window returned too few senior
+                  # roles. Already-seen jobs are hidden by the state file, so no repeats.
+                  "f_TPR": q.get("window", "r604800"),
                   "start": 0}
         if q.get("remote"):
             params["f_WT"] = "2"

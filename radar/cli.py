@@ -145,9 +145,13 @@ def main(argv=None) -> int:
                        key=lambda p: p.score, reverse=True)[: int(sc.get("max_posts", 6))]
     links = engage.linkedin_search_links(cfg["engage"].get("linkedin_topics", []))
 
+    passed = Counter(j.source for j in shortlist)
     notes.append(f"funnel: {stats['jobs_scanned']} scanned → {len(jobs)} new → "
-                 f"{len(shortlist)} passed title/location filters → {len(top_jobs)} scored ≥ {int(min_score)}")
-    near = [j for j in shortlist if j not in top_jobs][:5]
+                 f"{len(shortlist)} passed title/location filters "
+                 f"({', '.join(f'{k} {v}' for k, v in sorted(passed.items())) or 'none'}) → "
+                 f"{len(top_jobs)} scored ≥ {int(min_score)}")
+    near = sorted((j for j in shortlist if j not in top_jobs),
+                  key=lambda j: j.score, reverse=True)[:5]
     if near:
         notes.append("near misses: " + "; ".join(f"{int(j.score)} {j.title} @ {j.company}" for j in near))
 
