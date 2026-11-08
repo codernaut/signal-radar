@@ -1,7 +1,7 @@
 # Signal Radar
 
 A daily, LLM-ranked digest of the senior roles worth applying for and the public conversations
-worth joining. It runs on GitHub Actions and arrives by email at 08:17 Pakistan time.
+worth joining. It runs on GitHub Actions and arrives by email at 08:17 Pakistan time every Monday, Wednesday and Friday on Mondays, Wednesdays and Fridays.
 
 ```
  sources (public APIs)          stage 1: rules              stage 2: Claude            delivery

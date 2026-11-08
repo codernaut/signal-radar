@@ -106,7 +106,7 @@ linkedin:
     # Best LinkedIn source: zero LinkedIn traffic. Create 3-5 job alerts in the LinkedIn app
     # (daily, your target titles + locations) and set IMAP_USER / IMAP_PASSWORD secrets.
     enabled: true
-    days: 2
+    days: 4      # covers the Fri -> Mon gap between runs
 
 # ---------- engagement sources ----------
 engage:

@@ -21,7 +21,7 @@ from ..models import Post
 from .ats import strip_html
 
 
-def hackernews(queries: list[str], days: int = 3, min_points: int = 5, http=None) -> list[Post]:
+def hackernews(queries: list[str], days: int = 4, min_points: int = 5, http=None) -> list[Post]:
     http = http or session()
     since = int(time.time()) - days * 86400
     out: list[Post] = []
