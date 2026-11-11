@@ -138,7 +138,7 @@ Weigh: (1) would this hiring manager realistically shortlist this candidate, giv
 background, (2) seniority match, (3) location/relocation feasibility for someone relocating WITH \
 FAMILY from Pakistan (Gulf and Asia employers that sponsor family visas are a plus; remote roles \
 restricted to US/EU work authorization are a hard negative), (4) leverage of the candidate's rare \
-assets: upstream E&P data, OSDU, data virtualization, enterprise IAM, engineering leadership + MBA.
+assets: upstream E&P data, OSDU, data virtualization, enterprise IAM, engineering leadership with business training.
 Many listings (LinkedIn especially) have NO description. Then judge on title, company and \
 location, using what you know about the company; do not penalize the missing description itself. \
 A software/data/platform leadership title at an energy, energy-software or Gulf tech/AI company in \
